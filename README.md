@@ -1,1 +1,0 @@
-# tradesocio-devops-challenge

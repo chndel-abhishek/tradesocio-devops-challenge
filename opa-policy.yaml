@@ -1,0 +1,56 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8snondefaultsa
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sNonDefaultSA
+  targets:
+  - target: admission.k8s.gatekeeper.sh
+    rego: |
+      package k8snondefaultsa
+      violation[{"msg": msg}] {
+        input.review.object.spec.serviceAccountName == "default"
+        msg := "Deployment must not use default ServiceAccount"
+      }
+---
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8snonrootcontainer
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sNonRootContainer
+  targets:
+  - target: admission.k8s.gatekeeper.sh
+    rego: |
+      package k8snonrootcontainer
+      violation[{"msg": msg}] {
+        container := input.review.object.spec.template.spec.containers[_]
+        not container.securityContext.runAsNonRoot
+        msg := sprintf("Container %v must run as non-root", [container.name])
+      }
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sNonDefaultSA
+metadata:
+  name: non-default-sa
+spec:
+  match:
+    kinds:
+    - apiGroups: ["apps"]
+      kinds: ["Deployment"]
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sNonRootContainer
+metadata:
+  name: non-root-container
+spec:
+  match:
+    kinds:
+    - apiGroups: ["apps"]
+      kinds: ["Deployment"]
