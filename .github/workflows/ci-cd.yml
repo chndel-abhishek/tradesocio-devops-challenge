@@ -35,5 +35,5 @@ jobs:
       - name: Push Docker image
         if: github.event_name == 'push'
         run: |
-          docker tag devops-challenge abhishek7868/tradesocio-devops-challenge:latest
+          docker tag tradesocio-devops-challenge abhishek7868/tradesocio-devops-challenge:latest
           docker push abhishek7868/tradesocio-devops-challenge:latest
