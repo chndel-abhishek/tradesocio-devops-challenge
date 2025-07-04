@@ -84,8 +84,8 @@ sudo mv container-structure-test-linux-amd64 /usr/local/bin/container-structure-
 ### 📁 Clone Repository
 
 ```bash
-git clone https://github.com/<your-username>/devops-challenge.git
-cd devops-challenge
+git https://github.com/chndel-abhishek/tradesocio-devops-challenge.git
+cd tradesocio-devops-challenge
 ```
 
 ---
