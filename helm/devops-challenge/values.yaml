@@ -1,0 +1,14 @@
+replicaCount: 1
+image:
+  repository: abhishek7868/tradesocio-devops-challenge
+  tag: "latest"
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 80
+ingress:
+  enabled: true
+  host: devops-challenge.local
+serviceAccount:
+  create: true
+  name: devops-challenge-sa

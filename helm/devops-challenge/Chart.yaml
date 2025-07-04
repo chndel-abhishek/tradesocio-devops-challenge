@@ -1,0 +1,4 @@
+apiVersion: v2
+name: devops-challenge
+description: A Helm chart for DevOps Challenge API
+version: 0.1.0
